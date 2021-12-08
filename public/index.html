@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wolvercoin</title>
+  <script src="scripts/nft/jquery-3.6.0.min.js"></script>
+  <script src="scripts/globals.js"></script>
+  <script src="scripts/nav.js"></script>
+  <!-- https://github.com/ipfs/js-ipfs -->
+  <script src="https://unpkg.com/ipfs-http-client@30.1.3/dist/index.js"></script>
+  <script src="https://bundle.run/buffer@5.2.1"></script>
+
+  <!-- Include Javascript library to attach to the Ethereum blockchain -->
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+  <script src="https://unpkg.com/@metamask/detect-provider/dist/detect-provider.min.js"></script>
+
+  <!-- update the version number as needed -->
+  <script defer src="/__/firebase/9.0.2/firebase-app-compat.js"></script>
+
+  <!--
+      initialize the SDK after all desired features are loaded, set useEmulator to false
+      to avoid connecting the SDK to running emulators.
+    -->
+  <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+</head>
+
+<body>
+  <div class="outer-container">
+    <div class="container">
+      <div class="content">
+        <div class="menu-container">
+          <div class="logo-container"><a class="logo-link" href="/">Wolvercoin</a></div>
+          <div class="menu-items">
+            <a id="menu_home" class="menu-item" href="/#">Balances</a>
+            <a id="menu_nfts" class="menu-item " href="/#nfts">NFTs</a>
+            <a id="menu_announcements" class="menu-item " href="/#announcements">Announcements</a>
+            <a id="menu_docs" class="menu-item " href="/#docs">Docs</a>
+          </div>
+          <div class="wallet-info">
+            <div id="wallet-connected" class="wallet-connected-container hidden">
+              <div class="wallet-info ">
+                <div class="gas-station-container hidden">
+                  <svg class="MuiSvgIcon-root icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      d="M19.77 7.23l.01-.01-3.72-3.72L15 4.56l2.11 2.11c-.94.36-1.61 1.26-1.61 2.33 0 1.38 1.12 2.5 2.5 2.5.36 0 .69-.08 1-.21v7.21c0 .55-.45 1-1 1s-1-.45-1-1V14c0-1.1-.9-2-2-2h-1V5c0-1.1-.9-2-2-2H6c-1.1 0-2 .9-2 2v16h10v-7.5h1.5v5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V9c0-.69-.28-1.32-.73-1.77zM12 10H6V5h6v5zm6 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z">
+                    </path>
+                  </svg><span class="price">62</span>
+                </div>
+                <span id="addCoinToMetamask" class="crypto-icon"></span>
+                <span class="connected-indicator"></span>
+                <span class="address">
+                  <a href="" id="link-to-etherscan" class="link-to-etherscan" target="_blank" rel="noopener noreferrer"></a>
+                </span>
+                <span class="">
+                  <button class="disconnect-button" tabindex="-1" type="button" disabled="">
+                    <span class="MuiButton-label">Disconnect</span>
+                  </button>
+                </span>
+              </div>
+            </div>
+            <button id="wallet-connect-button" class="wallet-connect-button" tabindex="0" type="button" aria-controls="wallet-info-dropdown" aria-haspopup="true" id="wallet-connect">
+              <span class="MuiButton-label">Connect Wallet</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="inner-content">
+        <div id="inner-content-home" class="inner-content-home hidden">
+          <div class="header-row">
+            <div class="header-item">
+              <p class="title">Wallet Balance</p>
+              <p class="figure"><span id="walletBalance">-</span></p>
+            </div>
+            <div class="header-item">
+              <p class="title">Total Deposits</p>
+              <p class="figure"><span id="stakedBalance">-</span></p>
+            </div>
+          </div>
+          <div id="switch-network" class="switch-network hidden">
+            <button class="switch-network-button" id="switch-network-button">Switch To the Correct Network</button>
+          </div>
+        </div>
+      </div>
+      <div id="inner-content-nfts" class="inner-content-nfts hidden">
+      </div>
+      <div id="inner-content-announcements" class="inner-content-announcements hidden">
+      </div>
+      <div id="inner-content-docs" class="inner-content-docs hidden">
+      </div>
+    </div>
+    <div id="isAdminOnly" class="admin-only hidden">
+      <div class="add-wallet-to-class">
+        <label for="prodNft_ID">NFT ID</label>
+        <input type="text" size="10" id="prodNft_ID"></input><br />
+        <input type="text" style="display:none;" size="10" id="prodNft_ID_nftTokenMetadata"></input>
+        <label for="prodNft_startTimeHoursFromNow">Start Time (# Hours From Now):</label>
+        <input type="text" size="40" id="prodNft_startTimeHoursFromNow"></input><br />
+        <label for="prodNft_durationHours">Duration in Hours</label>
+        <input type="text" size="40" id="prodNft_durationHours"></input><br />
+        <label for="prodNft_startingPrice">Starting Price</label>
+        <input type="text" size="40" id="prodNft_startingPrice"></input><br />
+        <button id="prodNft_createAuctionButton">Create Auction</button>
+        <br />
+      </div>
+
+      <div class="add-wallet-to-class">
+        <button id="checkBalanceForWallet">Check Balance</button>
+        <br />
+        <label for="checkBalanceForWallet_WalletId">Wallet Id:</label>
+        <input type="text" size="40" id="checkBalanceForWallet_WalletId"></input>
+      </div>
+      <div class="add-wallet-to-class">
+        <button id="removeAuctionByNFTId">Remove By NFT ID</button>
+        <br />
+        <label for="removeAuctionByNFTId_nftId">NFD Id:</label>
+        <input type="text" size="4" id="removeAuctionByNFTId_nftId"></input>
+      </div>
+
+      <div class="add-wallet-to-class">
+        <button id="getWalletsForClass">Get Wallets For Class</button>
+        <br />
+        <label for="getWalletsForClass_ClassPeriod">Class Period:</label>
+        <input type="text" size="4" id="getWalletsForClass_ClassPeriod"></input>
+        <div id="walletsForPeriod"></div>
+      </div>
+      <div class="add-wallet-to-class">
+        <button id="addWalletToClass">Add Wallet To Class</button>
+        <br />
+        <label for="addWalletToClass_ClassPeriod">Class Period:</label>
+        <input type="text" size="4" id="addWalletToClass_ClassPeriod"></input>
+        <br />
+        <label for="addWalletToClass_WalletId">Wallet Id:</label>
+        <input type="text" size="40" id="addWalletToClass_WalletId"></input>
+      </div>
+
+      <div class="add-wallet-to-class">
+        <button id="removeWalletFromClass">Remove Wallet From Class</button>
+        <br />
+        <label for="removeWalletFromClass_ClassPeriod">Class Period:</label>
+        <input type="text" size="4" id="removeWalletFromClass_ClassPeriod"></input>
+        <br />
+        <label for="removeWalletFromClass_WalletId">Wallet Id:</label>
+        <input type="text" size="40" id="removeWalletFromClass_WalletId"></input>
+      </div>
+
+      <div class="add-wallet-to-class">
+        <button id="sendCoinToClassPeriod">Send Coin to Class</button>
+        <br />
+        <label for="sendCoinToClassPeriod_ClassPeriod">Class Period:</label>
+        <input type="text" size="4" id="sendCoinToClassPeriod_ClassPeriod"></input>
+        <br />
+        <label for="sendCoinToClassPeriod_amount">Amount:</label>
+        <input type="text" size="8" id="sendCoinToClassPeriod_amount"></input>
+      </div>
+
+
+    </div>
+  </div>
+  <p id="load" class="load-hide"></p>
+</body>
+
+<script src="scripts/firebaseInitialize.js"></script>
+<script src="scripts/ethereumConnect.js"></script>
+<script src="./scripts/web3.min.js"></script>
+<script type="text/javascript" src="./scripts/contracts/wvc_abi.js"></script>
+<script type="text/javascript" src="./scripts/contracts/wvc_address.js"></script>
+<script src="scripts/ethereumInteract.js"></script>
+<script>
+  // Load page content of the part of the site we're going to
+  showContent(getNavFromUrl(window.location.href));
+</script>
+
+</html>
