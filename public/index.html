@@ -55,30 +55,41 @@
   function red() {
     actions.push(0);
     actioncount ++;
-    document.getElementById("topleft").classList.remove("grey");
-    document.getElementById("topleft").classList.add("red");
+    var elementlist = document.getElementById("topleft").classList
+    elementlist.remove("grey");
+    elementlist.add("red");
+    setTimeout(() => {  elementlist.remove("red");
+    elementlist.add("grey"); }, 1000);
   }
 
   function green() {
     actions.push(1);
     actioncount ++;
-
-    document.getElementById("topright").classList.remove("grey");
-    document.getElementById("topright").classList.add("green");
+    var elementlist = document.getElementById("topright").classList
+    elementlist.remove("grey");
+    elementlist.add("green");
+    setTimeout(() => {  elementlist.remove("green");
+    elementlist.add("grey"); }, 1000);
   }
 
   function yellow() {
     actions.push(2);
     actioncount ++;
-    document.getElementById("botleft").classList.remove("grey");
-    document.getElementById("botleft").classList.add("yellow");
+    var elementlist = document.getElementById("botleft").classList
+    elementlist.remove("grey");
+    elementlist.add("yellow");
+    setTimeout(() => {  elementlist.remove("yellow");
+    elementlist.add("grey"); }, 1000);
   }
 
   function blue() {
     actions.push(3);
     actioncount ++;
-    document.getElementById("botright").classList.remove("grey");
-    document.getElementById("botright").classList.add("blue");
+    var elementlist = document.getElementById("botright").classList
+    elementlist.remove("grey");
+    elementlist.add("blue");
+    setTimeout(() => {  elementlist.remove("blue");
+    elementlist.add("grey"); }, 1000);
   }
   function checkEnd(){
     if (actions.length < actioncount){

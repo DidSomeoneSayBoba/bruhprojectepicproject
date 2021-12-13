@@ -52,8 +52,17 @@
 .yellow{
   background-color:yellow;
 }
-.grey{
-  background-color:grey;
+.darkred{
+  background-color:red;
+}
+.darkblue{
+  background-color:blue;
+}
+.darkgreen{
+  background-color:green;
+}
+.darkyellow{
+  background-color:yellow;
 }
 
 .mong {
@@ -72,4 +81,7 @@
   margin-left: 15%;
   height: 200px;
   background: green;
+}
+.ahahha{
+  background-image:
 }
