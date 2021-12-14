@@ -6,21 +6,21 @@
   <source src="amongus.mp3" type="audio/mp3">
 </audio>
 <h1>
-  brv kek
+  Ur score is cringe
 </h1>
 <div class="bruhh">
-  <button class="topl grey" id="topleft">
+  <button class="topl darkred" id="topleft">
     lettton
   </button>
-  <button class="topr grey" id="topright">
+  <button class="topr darkgreen" id="topright">
     butttttton
   </button>
 </div>
 <div class="down">
-  <button class="botl grey" id="botleft">
+  <button class="botl darkyellow" id="botleft">
     butttttton
   </button>
-  <button class="botr grey" id="botright">
+  <button class="botr darkblue" id="botright">
     butttttton
   </button>
 </div>
@@ -46,6 +46,8 @@
 <script src="./trip.js"></script>
 <script>
   //0red 1grn 2yel 3blu
+  var checkdex = 0;
+  var prevactions = []
   var actions = []
   var actioncount = 0;
   function ack() {
@@ -54,48 +56,60 @@
 
   function red() {
     actions.push(0);
+    var word = "red"
     actioncount ++;
+    document.getElementById("topleft").disabled = true;
     var elementlist = document.getElementById("topleft").classList
-    elementlist.remove("grey");
-    elementlist.add("red");
+    elementlist.remove(("dark"+word));
+    elementlist.add(word);
     setTimeout(() => {  elementlist.remove("red");
-    elementlist.add("grey"); }, 1000);
+    elementlist.add("dark"+word); document.getElementById("topleft").disabled = false;}, 1000);
+
   }
 
   function green() {
     actions.push(1);
+    var word = "green"
     actioncount ++;
     var elementlist = document.getElementById("topright").classList
-    elementlist.remove("grey");
-    elementlist.add("green");
-    setTimeout(() => {  elementlist.remove("green");
-    elementlist.add("grey"); }, 1000);
+    elementlist.remove(("dark"+word));
+    elementlist.add(word);
+    setTimeout(() => {  elementlist.remove(word);
+    elementlist.add("dark"+word); document.getElementById("topright").disabled = false;}, 1000);
   }
 
   function yellow() {
     actions.push(2);
+    var word = "yellow"
     actioncount ++;
     var elementlist = document.getElementById("botleft").classList
-    elementlist.remove("grey");
-    elementlist.add("yellow");
-    setTimeout(() => {  elementlist.remove("yellow");
-    elementlist.add("grey"); }, 1000);
+    elementlist.remove(("dark"+word));
+    elementlist.add(word);
+    setTimeout(() => {  elementlist.remove(word);
+    elementlist.add("dark"+word); document.getElementById("botleft").disabled = false;}, 1000);
   }
 
   function blue() {
     actions.push(3);
     actioncount ++;
+    var word = "blue"
     var elementlist = document.getElementById("botright").classList
-    elementlist.remove("grey");
-    elementlist.add("blue");
-    setTimeout(() => {  elementlist.remove("blue");
-    elementlist.add("grey"); }, 1000);
+    elementlist.remove(("dark"+word));
+    elementlist.add(word);
+    setTimeout(() => {  elementlist.remove(word);
+    elementlist.add("dark"+word); document.getElementById("botright").disabled = false;}, 1000);
+  }
+  function checkCorrect(){
+    if(actions.at(-1)==prevactions.at(checkdex)){
+      
+    }
   }
   function checkEnd(){
     if (actions.length < actioncount){
 
     }
   }
+
   document.getElementById("topleft").addEventListener("click", red);
   document.getElementById("topright").addEventListener("click", green);
   document.getElementById("botleft").addEventListener("click", yellow);
