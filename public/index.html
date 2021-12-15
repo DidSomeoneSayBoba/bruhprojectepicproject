@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html class="ahahha">
 <img src="./spaghet.jpeg">
+<img id="boombox" hidden src="./bong.gif">
 <link rel="stylesheet" href="style.css">
 <audio id="boom" hidden controls autoplay>
   <source  src="vine.mp3" type="audio/mp3" >
 </audio>
 <audio id="rude" hidden controls autoplay>
   <source  src="rude.mp3" type="audio/mp3" >
+</audio>
+<audio id="HUh" hidden controls autoplay>
+  <source  src="HUAHSD.mp3" type="audio/mp3" >
 </audio>
 <h1 id="scoretext">
   Ur score is cringe
@@ -74,6 +78,7 @@
     document.getElementById("topright").disabled = false;
   }
   function red() {
+
     actions.push(0);
     actioncount++;
     disableAll()
@@ -206,6 +211,10 @@
     document.getElementById("boom").currentTime=0;
     document.getElementById("boom").play();
   }
+  function huh(){
+    document.getElementById("HUh").currentTime=0;
+    document.getElementById("HUh").play();
+  }
   function darude(){
 
     document.getElementById("rude").play();
@@ -216,6 +225,7 @@
 
       setTimeout(() => {
         flash(prevactions.at(num));
+        huh();
       }, 1100*num);
     }
     setTimeout(() => {
