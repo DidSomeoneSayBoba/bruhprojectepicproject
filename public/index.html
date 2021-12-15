@@ -2,8 +2,11 @@
 <html class="ahahha">
 <img src="./spaghet.jpeg">
 <link rel="stylesheet" href="style.css">
-<audio controls autoplay>
-  <source src="amongus.mp3" type="audio/mp3">
+<audio id="boom" hidden controls autoplay>
+  <source  src="vine.mp3" type="audio/mp3" >
+</audio>
+<audio id="rude" hidden controls autoplay>
+  <source  src="rude.mp3" type="audio/mp3" >
 </audio>
 <h1 id="scoretext">
   Ur score is cringe
@@ -73,11 +76,11 @@
   function red() {
     actions.push(0);
     actioncount++;
-    document.getElementById("topleft").disabled = true;
+    disableAll()
     flash(0);
     setTimeout(() => {
       checkCorrect();
-      document.getElementById("topleft").disabled = false;
+      enableAll();
     }, 1000);
 
   }
@@ -85,52 +88,64 @@
   function green() {
     actions.push(1);
     actioncount++;
-    document.getElementById("topright").disabled = true;
+    disableAll()
     flash(1);
     setTimeout(() => {
       checkCorrect();
-      document.getElementById("topright").disabled = false;
+      enableAll();
     }, 1000);
   }
 
   function yellow() {
     actions.push(2);
     actioncount++;
-    document.getElementById("botleft").disabled = true;
+    disableAll()
     flash(2);
     setTimeout(() => {
       checkCorrect();
-      document.getElementById("botleft").disabled = false;
+      enableAll();
     }, 1000);
   }
 
   function blue() {
     actions.push(3);
     actioncount++;
-    document.getElementById("botright").disabled = true;
+    disableAll()
+    flash(3);
     setTimeout(() => {
       checkCorrect();
-      document.getElementById("botright").disabled = false;
+      enableAll();
     }, 1000);
   }
-
+  function rekt(){
+    location.reload();
+  }
   function checkCorrect() {
     if (actions.at(-1) == prevactions.at(checkdex)) {
-
+      checkdex ++;
       checkEnd();
     } else {
+      darude();
+      document.getElementById("scoretext").classList.add("lorge");
       document.getElementById("scoretext").innerHTML = "L.";
+      document.getElementById("start").innerHTML = "restart";
+      document.getElementById("start").disabled = false;
+      document.getElementById("start").addEventListener("click", rekt);
+      setTimeout(() => {
       alert("Your score was " + round);
+    },1);
     }
   }
 
   function checkEnd() {
-    if (actions.length >= actioncount) {
+    if (actions.length == prevactions.length) {
       round++;
-      document.getElementById("scoretext").innerHTML = ("Your score is ",round);
+
+      document.getElementById("scoretext").innerHTML = ("Your score is "+round);
       actioncount++;
       prevactions = actions;
       actions = [];
+      checkdex = 0;
       start();
     }
   }
@@ -187,20 +202,29 @@
   function randomColor() {
     return Math.floor(Math.random() * 4);
   }
+  function boom(){
+    document.getElementById("boom").currentTime=0;
+    document.getElementById("boom").play();
+  }
+  function darude(){
 
+    document.getElementById("rude").play();
+  }
   function start() {
     prevactions.push(randomColor());
-    for (var num = 0; num < actioncount; num++) {
-      console.log(prevactions.at(num));
+    for (let num = 0; num < prevactions.length; num++) {
+
       setTimeout(() => {
         flash(prevactions.at(num));
-      }, 1000*num);
+      }, 1100*num);
     }
     setTimeout(() => {
       enableAll();
     }, 1000*prevactions.length);
+    document.getElementById("start").disabled = true;
   }
   disableAll();
+  document.addEventListener("click", boom);
   document.getElementById("start").addEventListener("click", start);
   document.getElementById("topleft").addEventListener("click", red);
   document.getElementById("topright").addEventListener("click", green);
