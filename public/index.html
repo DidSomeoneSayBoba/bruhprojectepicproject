@@ -4,13 +4,13 @@
 <img id="boombox" hidden src="./bong.gif">
 <link rel="stylesheet" href="style.css">
 <audio id="boom" hidden controls autoplay>
-  <source  src="vine.mp3" type="audio/mp3" >
+  <source src="vine.mp3" type="audio/mp3">
 </audio>
 <audio id="rude" hidden controls autoplay>
-  <source  src="rude.mp3" type="audio/mp3" >
+  <source src="rude.mp3" type="audio/mp3">
 </audio>
 <audio id="HUh" hidden controls autoplay>
-  <source  src="HUAHSD.mp3" type="audio/mp3" >
+  <source src="HUAHSD.mp3" type="audio/mp3">
 </audio>
 <h1 id="scoretext">
   Ur score is cringe
@@ -65,18 +65,20 @@
     console.log("bruhh");
   }
 
-  function disableAll(){
+  function disableAll() {
     document.getElementById("topleft").disabled = true;
     document.getElementById("botleft").disabled = true;
     document.getElementById("botright").disabled = true;
     document.getElementById("topright").disabled = true;
   }
-  function enableAll(){
+
+  function enableAll() {
     document.getElementById("topleft").disabled = false;
     document.getElementById("botleft").disabled = false;
     document.getElementById("botright").disabled = false;
     document.getElementById("topright").disabled = false;
   }
+
   function red() {
 
     actions.push(0);
@@ -122,12 +124,14 @@
       enableAll();
     }, 1000);
   }
-  function rekt(){
+
+  function rekt() {
     location.reload();
   }
+
   function checkCorrect() {
     if (actions.at(-1) == prevactions.at(checkdex)) {
-      checkdex ++;
+      checkdex++;
       checkEnd();
     } else {
       darude();
@@ -137,8 +141,8 @@
       document.getElementById("start").disabled = false;
       document.getElementById("start").addEventListener("click", rekt);
       setTimeout(() => {
-      alert("Your score was " + round);
-    },1);
+        alert("Your score was " + round);
+      }, 1);
     }
   }
 
@@ -146,14 +150,14 @@
     if (actions.length == prevactions.length) {
       round++;
 
-      document.getElementById("scoretext").innerHTML = ("Your score is "+round);
+      document.getElementById("scoretext").innerHTML = ("Your score is " + round);
       actioncount++;
       prevactions = actions;
       actions = [];
       checkdex = 0;
       setTimeout(() => {
-      start();
-    },1000);
+        start();
+      }, 1000);
     }
   }
 
@@ -209,30 +213,35 @@
   function randomColor() {
     return Math.floor(Math.random() * 4);
   }
-  function boom(){
-    document.getElementById("boom").currentTime=0;
+
+  function boom() {
+    document.getElementById("boom").currentTime = 0;
     document.getElementById("boom").play();
   }
-  function huh(){
-    document.getElementById("HUh").currentTime=0;
+
+  function huh() {
+    document.getElementById("HUh").currentTime = 0;
     document.getElementById("HUh").play();
   }
-  function darude(){
+
+  function darude() {
 
     document.getElementById("rude").play();
   }
+
   function start() {
+    disableAll();
     prevactions.push(randomColor());
     for (let num = 0; num < prevactions.length; num++) {
 
       setTimeout(() => {
         flash(prevactions.at(num));
         huh();
-      }, 1100*num);
+      }, 1100 * num);
     }
     setTimeout(() => {
       enableAll();
-    }, 1000*prevactions.length);
+    }, 1000 * prevactions.length);
     document.getElementById("start").disabled = true;
   }
   disableAll();
