@@ -5,7 +5,7 @@
 <audio controls autoplay>
   <source src="amongus.mp3" type="audio/mp3">
 </audio>
-<h1>
+<h1 id="scoretext">
   Ur score is cringe
 </h1>
 <div class="bruhh">
@@ -24,7 +24,9 @@
     butttttton
   </button>
 </div>
-
+<button id="start">
+  shrtart
+</button>
 <section class="container">
   <div class="mong" id="amongus">
     hi mong us
@@ -46,70 +48,160 @@
 <script src="./trip.js"></script>
 <script>
   //0red 1grn 2yel 3blu
+  var round = 0;
   var checkdex = 0;
   var prevactions = []
   var actions = []
-  var actioncount = 0;
+  var actioncount = 1;
+
   function ack() {
     console.log("bruhh");
   }
 
+  function disableAll(){
+    document.getElementById("topleft").disabled = true;
+    document.getElementById("botleft").disabled = true;
+    document.getElementById("botright").disabled = true;
+    document.getElementById("topright").disabled = true;
+  }
+  function enableAll(){
+    document.getElementById("topleft").disabled = false;
+    document.getElementById("botleft").disabled = false;
+    document.getElementById("botright").disabled = false;
+    document.getElementById("topright").disabled = false;
+  }
   function red() {
     actions.push(0);
-    var word = "red"
-    actioncount ++;
+    actioncount++;
     document.getElementById("topleft").disabled = true;
-    var elementlist = document.getElementById("topleft").classList
-    elementlist.remove(("dark"+word));
-    elementlist.add(word);
-    setTimeout(() => {  elementlist.remove("red");
-    elementlist.add("dark"+word); document.getElementById("topleft").disabled = false;}, 1000);
+    flash(0);
+    setTimeout(() => {
+      checkCorrect();
+      document.getElementById("topleft").disabled = false;
+    }, 1000);
 
   }
 
   function green() {
     actions.push(1);
-    var word = "green"
-    actioncount ++;
-    var elementlist = document.getElementById("topright").classList
-    elementlist.remove(("dark"+word));
-    elementlist.add(word);
-    setTimeout(() => {  elementlist.remove(word);
-    elementlist.add("dark"+word); document.getElementById("topright").disabled = false;}, 1000);
+    actioncount++;
+    document.getElementById("topright").disabled = true;
+    flash(1);
+    setTimeout(() => {
+      checkCorrect();
+      document.getElementById("topright").disabled = false;
+    }, 1000);
   }
 
   function yellow() {
     actions.push(2);
-    var word = "yellow"
-    actioncount ++;
-    var elementlist = document.getElementById("botleft").classList
-    elementlist.remove(("dark"+word));
-    elementlist.add(word);
-    setTimeout(() => {  elementlist.remove(word);
-    elementlist.add("dark"+word); document.getElementById("botleft").disabled = false;}, 1000);
+    actioncount++;
+    document.getElementById("botleft").disabled = true;
+    flash(2);
+    setTimeout(() => {
+      checkCorrect();
+      document.getElementById("botleft").disabled = false;
+    }, 1000);
   }
 
   function blue() {
     actions.push(3);
-    actioncount ++;
-    var word = "blue"
-    var elementlist = document.getElementById("botright").classList
-    elementlist.remove(("dark"+word));
-    elementlist.add(word);
-    setTimeout(() => {  elementlist.remove(word);
-    elementlist.add("dark"+word); document.getElementById("botright").disabled = false;}, 1000);
-  }
-  function checkCorrect(){
-    if(actions.at(-1)==prevactions.at(checkdex)){
-      
-    }
-  }
-  function checkEnd(){
-    if (actions.length < actioncount){
-
-    }
+    actioncount++;
+    document.getElementById("botright").disabled = true;
+    setTimeout(() => {
+      checkCorrect();
+      document.getElementById("botright").disabled = false;
+    }, 1000);
   }
 
+  function checkCorrect() {
+    if (actions.at(-1) == prevactions.at(checkdex)) {
+
+      checkEnd();
+    } else {
+      document.getElementById("scoretext").innerHTML = "L.";
+      alert("Your score was " + round);
+    }
+  }
+
+  function checkEnd() {
+    if (actions.length >= actioncount) {
+      round++;
+      document.getElementById("scoretext").innerHTML = ("Your score is ",round);
+      actioncount++;
+      prevactions = actions;
+      actions = [];
+      start();
+    }
+  }
+
+  function flash(color) {
+    var redbut = document.getElementById("topleft");
+    var grnbut = document.getElementById("topright");
+    var yelbut = document.getElementById("botleft");
+    var blubut = document.getElementById("botright");
+    switch (color) {
+      case 0:
+        var word = "red";
+        var elementlist = redbut.classList;
+        elementlist.remove(("dark" + word));
+        elementlist.add(word);
+        setTimeout(() => {
+          elementlist.remove(word);
+          elementlist.add("dark" + word);
+        }, 1000);
+        break;
+      case 1:
+        var word = "green";
+        var elementlist = grnbut.classList;
+        elementlist.remove(("dark" + word));
+        elementlist.add(word);
+        setTimeout(() => {
+          elementlist.remove(word);
+          elementlist.add("dark" + word);
+        }, 1000);
+        break;
+      case 2:
+        var word = "yellow";
+        var elementlist = yelbut.classList;
+        elementlist.remove(("dark" + word));
+        elementlist.add(word);
+        setTimeout(() => {
+          elementlist.remove(word);
+          elementlist.add("dark" + word);
+        }, 1000);
+        break;
+      case 3:
+        var word = "blue";
+        var elementlist = blubut.classList;
+        elementlist.remove(("dark" + word));
+        elementlist.add(word);
+        setTimeout(() => {
+          elementlist.remove(word);
+          elementlist.add("dark" + word);
+        }, 1000);
+        break;
+    }
+  }
+
+  function randomColor() {
+    return Math.floor(Math.random() * 4);
+  }
+
+  function start() {
+    prevactions.push(randomColor());
+    for (var num = 0; num < actioncount; num++) {
+      console.log(prevactions.at(num));
+      setTimeout(() => {
+        flash(prevactions.at(num));
+      }, 1000*num);
+    }
+    setTimeout(() => {
+      enableAll();
+    }, 1000*prevactions.length);
+  }
+  disableAll();
+  document.getElementById("start").addEventListener("click", start);
   document.getElementById("topleft").addEventListener("click", red);
   document.getElementById("topright").addEventListener("click", green);
   document.getElementById("botleft").addEventListener("click", yellow);
