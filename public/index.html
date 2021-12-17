@@ -237,11 +237,11 @@
       setTimeout(() => {
         flash(prevactions.at(num));
         huh();
-      }, 400 * num );
+      }, 500 * num );
     }
     setTimeout(() => {
       enableAll();
-    }, 500 * prevactions.length);
+    }, 600 * prevactions.length);
     document.getElementById("start").disabled = true;
   }
   disableAll();
