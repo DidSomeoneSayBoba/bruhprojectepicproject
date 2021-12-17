@@ -16,7 +16,7 @@
   Ur score is cringe
 </h1>
 <div class="bruhh">
-  <button class="topl darkred" id="topleft">
+  <button class="topl darkred boom" id="topleft">
     lettton
   </button>
   <button class="topr darkgreen" id="topright">
@@ -88,7 +88,7 @@
     setTimeout(() => {
       checkCorrect();
       enableAll();
-    }, 1000);
+    }, 500);
 
   }
 
@@ -100,7 +100,7 @@
     setTimeout(() => {
       checkCorrect();
       enableAll();
-    }, 1000);
+    }, 500);
   }
 
   function yellow() {
@@ -111,7 +111,7 @@
     setTimeout(() => {
       checkCorrect();
       enableAll();
-    }, 1000);
+    }, 500);
   }
 
   function blue() {
@@ -122,7 +122,7 @@
     setTimeout(() => {
       checkCorrect();
       enableAll();
-    }, 1000);
+    }, 500);
   }
 
   function rekt() {
@@ -157,7 +157,7 @@
       checkdex = 0;
       setTimeout(() => {
         start();
-      }, 1000);
+      }, 300);
     }
   }
 
@@ -175,7 +175,7 @@
         setTimeout(() => {
           elementlist.remove(word);
           elementlist.add("dark" + word);
-        }, 1000);
+        }, 400);
         break;
       case 1:
         var word = "green";
@@ -185,7 +185,7 @@
         setTimeout(() => {
           elementlist.remove(word);
           elementlist.add("dark" + word);
-        }, 1000);
+        }, 400);
         break;
       case 2:
         var word = "yellow";
@@ -195,7 +195,7 @@
         setTimeout(() => {
           elementlist.remove(word);
           elementlist.add("dark" + word);
-        }, 1000);
+        }, 400);
         break;
       case 3:
         var word = "blue";
@@ -205,7 +205,7 @@
         setTimeout(() => {
           elementlist.remove(word);
           elementlist.add("dark" + word);
-        }, 1000);
+        }, 400);
         break;
     }
   }
@@ -237,11 +237,11 @@
       setTimeout(() => {
         flash(prevactions.at(num));
         huh();
-      }, 1100 * num);
+      }, 400 * num );
     }
     setTimeout(() => {
       enableAll();
-    }, 1000 * prevactions.length);
+    }, 500 * prevactions.length);
     document.getElementById("start").disabled = true;
   }
   disableAll();
