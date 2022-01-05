@@ -12,6 +12,9 @@
 <audio id="HUh" hidden controls autoplay>
   <source src="HUAHSD.mp3" type="audio/mp3">
 </audio>
+<h1 id="hightest">
+  Ur high score is cringe
+</h1>
 <h1 id="scoretext">
   Ur score is cringe
 </h1>
@@ -60,6 +63,7 @@
   var prevactions = []
   var actions = []
   var actioncount = 1;
+  var high = null;
 
   function ack() {
     console.log("bruhh");
@@ -122,7 +126,7 @@
     setTimeout(() => {
       checkCorrect();
       enableAll();
-    },400);
+    }, 400);
   }
 
   function rekt() {
@@ -140,6 +144,15 @@
       document.getElementById("start").innerHTML = "restart";
       document.getElementById("start").disabled = false;
       document.getElementById("start").addEventListener("click", rekt);
+      if (high != null) {
+        if (high < round) {
+          window.localStorage.HighScore = round;
+          document.getElementById("hightest").innerHTML = ("Ur high score is " + round);
+        }
+
+      } else {
+        window.localStorage.HighScore = round;
+      }
       setTimeout(() => {
         alert("Your score was " + round);
       }, 1);
@@ -237,12 +250,18 @@
       setTimeout(() => {
         flash(prevactions.at(num));
         huh();
-      }, 500 * num );
+      }, 500 * num);
     }
     setTimeout(() => {
       enableAll();
     }, 500 * prevactions.length);
     document.getElementById("start").disabled = true;
+  }
+  if (window.localStorage.getItem("HighScore") != null) {
+    high = window.localStorage.getItem("HighScore");
+  }
+  if (high != null) {
+    document.getElementById("hightest").innerHTML = ("Ur high score is " + high);
   }
   disableAll();
   document.addEventListener("click", boom);
