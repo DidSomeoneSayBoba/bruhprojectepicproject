@@ -144,15 +144,7 @@
       document.getElementById("start").innerHTML = "restart";
       document.getElementById("start").disabled = false;
       document.getElementById("start").addEventListener("click", rekt);
-      if (high != null) {
-        if (high < round) {
-          window.localStorage.HighScore = round;
-          document.getElementById("hightest").innerHTML = ("Ur high score is " + round);
-        }
 
-      } else {
-        window.localStorage.HighScore = round;
-      }
       setTimeout(() => {
         alert("Your score was " + round);
       }, 1);
@@ -168,6 +160,15 @@
       prevactions = actions;
       actions = [];
       checkdex = 0;
+      if (high != null) {
+        if (high < round) {
+          window.localStorage.HighScore = round;
+          document.getElementById("hightest").innerHTML = ("Ur high score is " + round);
+        }
+
+      } else {
+        window.localStorage.HighScore = round;
+      }
       setTimeout(() => {
         start();
       }, 300);
