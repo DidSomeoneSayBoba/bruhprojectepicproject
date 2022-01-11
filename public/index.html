@@ -58,12 +58,12 @@
 <script src="./trip.js"></script>
 <script>
   //0red 1grn 2yel 3blu
-  var round = 0;
-  var checkdex = 0;
-  var prevactions = []
-  var actions = []
-  var actioncount = 1;
-  var high = null;
+  let round = 0;
+  let checkdex = 0;
+  let prevactions = []
+  let actions = []
+  let actioncount = 1;
+  let high = null;
 
   function ack() {
     console.log("bruhh");
@@ -176,10 +176,15 @@
   }
 
   function flash(color) {
-    var redbut = document.getElementById("topleft");
-    var grnbut = document.getElementById("topright");
-    var yelbut = document.getElementById("botleft");
-    var blubut = document.getElementById("botright");
+
+      let button{
+       redbut : document.getElementById("topleft"),
+       grnbut : document.getElementById("topright"),
+       yelbut : document.getElementById("botleft"),
+       blubut : document.getElementById("botright")
+    }
+
+
     switch (color) {
       case 0:
         var word = "red";
