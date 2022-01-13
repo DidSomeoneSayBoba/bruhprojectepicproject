@@ -182,7 +182,7 @@ buttonPresses : {
     Game.userActions.push(0);
     Game.actionCount++;
     Game.buttonPresses.setAllUnpressable();
-    Game.flash(0);
+    Game.flashButton(0);
     setTimeout(() => {
       Game.checkCorrect();
       Game.buttonPresses.setAllPressable();
@@ -193,7 +193,7 @@ buttonPresses : {
    Game.userActions.push(1);
    Game.actionCount++;
    Game.buttonPresses.setAllUnpressable();
-   Game.flash(1);
+   Game.flashButton(1);
    setTimeout(() => {
      Game.checkCorrect();
      Game.buttonPresses.setAllPressable();
@@ -204,7 +204,7 @@ buttonPresses : {
    Game.userActions.push(2);
    Game.actionCount++;
    Game.buttonPresses.setAllUnpressable();
-   Game.flash(2);
+   Game.flashButton(2);
    setTimeout(() => {
      Game.checkCorrect();
      Game.buttonPresses.setAllPressable();
@@ -215,7 +215,7 @@ buttonPresses : {
    Game.userActions.push(3);
    Game.actionCount++;
    Game.buttonPresses.setAllUnpressable();
-   Game.flash(3);
+   Game.flashButton(3);
    setTimeout(() => {
      Game.checkCorrect();
      Game.buttonPresses.setAllPressable();
@@ -248,7 +248,7 @@ buttonPresses : {
     for (let num = 0; num < Game.computerDirections.length; num++) {
 
       setTimeout(() => {
-        Game.flash(Game.computerDirections.at(num));
+        Game.flashButton(Game.computerDirections.at(num));
         Game.soundEffect.huh();
       }, 500 * num);
     }
@@ -258,17 +258,6 @@ buttonPresses : {
     document.getElementById("start").disabled = true;
   }
   }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
