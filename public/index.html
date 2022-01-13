@@ -57,134 +57,65 @@
 </html>
 <script src="./trip.js"></script>
 <script>
-  //0red 1grn 2yel 3blu
-  let round = 0;
-  let checkdex = 0;
-  let prevactions = []
-  let actions = []
-  let actioncount = 1;
-  let high = null;
 
-  function ack() {
-    console.log("bruhh");
-  }
+  let Game = {
+   roundNumber : 0,
+   checkIndex : 0,
+   computerDirections : [],
+   userActions : [],
+   actionCount : 1,
+   isHighScore : null,
 
-  function disableAll() {
-    document.getElementById("topleft").disabled = true;
-    document.getElementById("botleft").disabled = true;
-    document.getElementById("botright").disabled = true;
-    document.getElementById("topright").disabled = true;
-  }
-
-  function enableAll() {
-    document.getElementById("topleft").disabled = false;
-    document.getElementById("botleft").disabled = false;
-    document.getElementById("botright").disabled = false;
-    document.getElementById("topright").disabled = false;
-  }
-
-  function red() {
-
-    actions.push(0);
-    actioncount++;
-    disableAll()
-    flash(0);
-    setTimeout(() => {
-      checkCorrect();
-      enableAll();
-    }, 400);
-
-  }
-
-  function green() {
-    actions.push(1);
-    actioncount++;
-    disableAll()
-    flash(1);
-    setTimeout(() => {
-      checkCorrect();
-      enableAll();
-    }, 400);
-  }
-
-  function yellow() {
-    actions.push(2);
-    actioncount++;
-    disableAll()
-    flash(2);
-    setTimeout(() => {
-      checkCorrect();
-      enableAll();
-    }, 400);
-  }
-
-  function blue() {
-    actions.push(3);
-    actioncount++;
-    disableAll()
-    flash(3);
-    setTimeout(() => {
-      checkCorrect();
-      enableAll();
-    }, 400);
-  }
-
-  function rekt() {
+  reloadPage:function () {
     location.reload();
-  }
-
-  function checkCorrect() {
-    if (actions.at(-1) == prevactions.at(checkdex)) {
-      checkdex++;
-      checkEnd();
+  },
+  checkCorrect:function () {
+    if (Game.userActions.at(-1) == Game.computerDirections.at(Game.checkIndex)) {
+      Game.checkIndex++;
+      Game.checkEnd();
     } else {
-      darude();
+      Game.soundEffect.darude();
       document.getElementById("scoretext").classList.add("lorge");
       document.getElementById("scoretext").innerHTML = "L.";
       document.getElementById("start").innerHTML = "restart";
       document.getElementById("start").disabled = false;
-      document.getElementById("start").addEventListener("click", rekt);
+      document.getElementById("start").addEventListener("click", Game.reloadPage);
+      Game.buttonPresses.setAllUnpressable();
 
       setTimeout(() => {
-        alert("Your score was " + round);
+        alert("Your score was " + Game.roundNumber);
       }, 1);
     }
-  }
+  },
+  checkEnd:function() {
+    if (Game.userActions.length == Game.computerDirections.length) {
+      Game.roundNumber++;
 
-  function checkEnd() {
-    if (actions.length == prevactions.length) {
-      round++;
-
-      document.getElementById("scoretext").innerHTML = ("Your score is " + round);
-      actioncount++;
-      prevactions = actions;
-      actions = [];
-      checkdex = 0;
-      if (high != null) {
-        if (high < round) {
-          window.localStorage.HighScore = round;
-          document.getElementById("hightest").innerHTML = ("Ur high score is " + round);
+      document.getElementById("scoretext").innerHTML = ("Your score is " + Game.roundNumber);
+      Game.actionCount++;
+      Game.computerDirections = Game.userActions;
+      Game.userActions = [];
+      Game.checkIndex = 0;
+      if (Game.isHighScore != null) {
+        if (Game.isHighScore < Game.roundNumber) {
+          window.localStorage.HighScore = Game.roundNumber;
+          document.getElementById("hightest").innerHTML = ("Ur high score is " + Game.roundNumber);
         }
 
       } else {
-        window.localStorage.HighScore = round;
+        window.localStorage.HighScore = Game.roundNumber;
       }
       setTimeout(() => {
-        start();
+        Game.start();
       }, 300);
     }
-  }
+  },
+   flashButton:function(color) {
 
-  function flash(color) {
-
-      let button{
-       redbut : document.getElementById("topleft"),
-       grnbut : document.getElementById("topright"),
-       yelbut : document.getElementById("botleft"),
-       blubut : document.getElementById("botright")
-    }
-
-
+    var redbut = document.getElementById("topleft");
+    var grnbut = document.getElementById("topright");
+    var yelbut = document.getElementById("botleft");
+    var blubut = document.getElementById("botright");
     switch (color) {
       case 0:
         var word = "red";
@@ -227,53 +158,131 @@
         }, 400);
         break;
     }
-  }
+  },
 
-  function randomColor() {
-    return Math.floor(Math.random() * 4);
-  }
 
-  function boom() {
-    document.getElementById("boom").currentTime = 0;
-    document.getElementById("boom").play();
-  }
+buttonPresses : {
 
-  function huh() {
-    document.getElementById("HUh").currentTime = 0;
-    document.getElementById("HUh").play();
-  }
 
-  function darude() {
+    setAllUnpressable:function() {
+      document.getElementById("topleft").disabled = true;
+      document.getElementById("botleft").disabled = true;
+      document.getElementById("botright").disabled = true;
+      document.getElementById("topright").disabled = true;
+    },
+    setAllPressable:function () {
+      document.getElementById("topleft").disabled = false;
+      document.getElementById("botleft").disabled = false;
+      document.getElementById("botright").disabled = false;
+      document.getElementById("topright").disabled = false;
+    },
 
-    document.getElementById("rude").play();
-  }
+  redPress:function () {
 
-  function start() {
-    disableAll();
-    prevactions.push(randomColor());
-    for (let num = 0; num < prevactions.length; num++) {
+    Game.userActions.push(0);
+    Game.actionCount++;
+    Game.buttonPresses.setAllUnpressable();
+    Game.flash(0);
+    setTimeout(() => {
+      Game.checkCorrect();
+      Game.buttonPresses.setAllPressable();
+    }, 400);
+ },
+ //0red 1grn 2yel 3blu
+ greenPress:function () {
+   Game.userActions.push(1);
+   Game.actionCount++;
+   Game.buttonPresses.setAllUnpressable();
+   Game.flash(1);
+   setTimeout(() => {
+     Game.checkCorrect();
+     Game.buttonPresses.setAllPressable();
+   }, 400);
+ },
+
+ yellowPress:function () {
+   Game.userActions.push(2);
+   Game.actionCount++;
+   Game.buttonPresses.setAllUnpressable();
+   Game.flash(2);
+   setTimeout(() => {
+     Game.checkCorrect();
+     Game.buttonPresses.setAllPressable();
+   }, 400);
+ },
+
+ bluePress:function () {
+   Game.userActions.push(3);
+   Game.actionCount++;
+   Game.buttonPresses.setAllUnpressable();
+   Game.flash(3);
+   setTimeout(() => {
+     Game.checkCorrect();
+     Game.buttonPresses.setAllPressable();
+   }, 400);
+ },
+},
+
+  soundEffect : {
+    randomColor:function () {
+      return Math.floor(Math.random() * 4);
+    },
+    boom:function() {
+      document.getElementById("boom").currentTime = 0;
+      document.getElementById("boom").play();
+    },
+
+    huh:function() {
+      document.getElementById("HUh").currentTime = 0;
+      document.getElementById("HUh").play();
+    },
+
+    darude:function() {
+
+      document.getElementById("rude").play();
+    }
+  },
+  start:function() {
+  Game.buttonPresses.setAllUnpressable();
+    Game.computerDirections.push(Game.soundEffect.randomColor());
+    for (let num = 0; num < Game.computerDirections.length; num++) {
 
       setTimeout(() => {
-        flash(prevactions.at(num));
-        huh();
+        Game.flash(Game.computerDirections.at(num));
+        Game.soundEffect.huh();
       }, 500 * num);
     }
     setTimeout(() => {
-      enableAll();
-    }, 500 * prevactions.length);
+    Game.buttonPresses.setAllPressable();
+    }, 500 * Game.computerDirections.length);
     document.getElementById("start").disabled = true;
   }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   if (window.localStorage.getItem("HighScore") != null) {
-    high = window.localStorage.getItem("HighScore");
+    Game.isHighScore = window.localStorage.getItem("HighScore");
   }
-  if (high != null) {
-    document.getElementById("hightest").innerHTML = ("Ur high score is " + high);
+  if (Game.isHighScore != null) {
+    document.getElementById("hightest").innerHTML = ("Ur high score is " + Game.isHighScore);
   }
-  disableAll();
-  document.addEventListener("click", boom);
-  document.getElementById("start").addEventListener("click", start);
-  document.getElementById("topleft").addEventListener("click", red);
-  document.getElementById("topright").addEventListener("click", green);
-  document.getElementById("botleft").addEventListener("click", yellow);
-  document.getElementById("botright").addEventListener("click", blue);
+  Game.buttonPresses.setAllUnpressable();
+  document.addEventListener("click", Game.soundEffect.boom);
+  document.getElementById("start").addEventListener("click", Game.start);
+  document.getElementById("topleft").addEventListener("click", Game.buttonPresses.redPress);
+  document.getElementById("topright").addEventListener("click", Game.buttonPresses.greenPress);
+  document.getElementById("botleft").addEventListener("click", Game.buttonPresses.yellowPress);
+  document.getElementById("botright").addEventListener("click", Game.buttonPresses.bluePress);
 </script>
